@@ -11,6 +11,11 @@
     <Authors>Michael Taron</Authors>
     <Company />
     <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseUrl>https://github.com/mtaron/FunctionInterpreter/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/mtaron/FunctionInterpreter</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mtaron/FunctionInterpreter</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageTags>math, parser, functions, compiler</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
