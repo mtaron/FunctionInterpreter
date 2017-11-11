@@ -2,6 +2,9 @@
 
 namespace FunctionInterpreter
 {
+    /// <summary>
+    /// Describes the type and location of a compilation error.
+    /// </summary>
     [DebuggerDisplay("{Text}")]
     public class CompileError
     {

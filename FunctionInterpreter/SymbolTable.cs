@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FunctionInterpreter
 {
@@ -53,9 +54,7 @@ namespace FunctionInterpreter
         {
             if (!_functionGraph.Contains(name))
             {
-                // A function is always dependent on itself, even if we haven't
-                // added it to the graph.
-                return new string[] { name };
+                return Enumerable.Empty<string>();
             }
 
             return _functionGraph.GetClosure(name);
@@ -101,7 +100,7 @@ namespace FunctionInterpreter
             if (string.IsNullOrEmpty(function)
                 || string.IsNullOrEmpty(reference)
                 || !_functionGraph.Contains(reference)
-                || Compiler.IsGeneratedFunctionName(reference))
+                || CompilationContext.IsGeneratedFunctionName(reference))
             {
                 return;
             }

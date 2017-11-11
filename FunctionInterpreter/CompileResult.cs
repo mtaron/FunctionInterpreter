@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace FunctionInterpreter
 {
+    /// <summary>
+    /// Contains the result of a successful or failed compilation.
+    /// </summary>
     public class CompileResult
     {
         private readonly SymbolTable _symbols;
@@ -51,6 +54,22 @@ namespace FunctionInterpreter
 
         public IEnumerable<CompileError> Errors { get; }
 
+        /// <summary>
+        /// Gets all user defined functions that depend on the given function.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// CompileResult result = Compile.Compile(new string[]
+        /// {
+        ///    "f(x) = x",
+        ///    "g(x) = f(x + 2)",
+        ///    "h(x) = g(x)/2"
+        /// });
+        /// string[] dependents = result.GetDependentFunctions("f").ToArray();
+        /// </code>
+        /// dependents will contain f, g, and h since they would all change if
+        /// f changed.
+        /// </example>
         public IEnumerable<string> GetDependentFunctions(string functionName)
         {
             if (_symbols == null || string.IsNullOrEmpty(functionName))

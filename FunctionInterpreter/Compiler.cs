@@ -9,12 +9,8 @@ using FunctionInterpreter.Parse;
 namespace FunctionInterpreter
 {
     /// <summary>
-    /// Compiles strings into an executable functions.
+    /// Compiles strings into executable functions.
     /// </summary>
-    /// <example>
-    /// Func<double, double> sin = Compiler.CompileFunction("sin(x)");
-    /// 
-    /// </example>
     public static class Compiler
     {
         private const NumberStyles NumberStyle =
@@ -24,12 +20,19 @@ namespace FunctionInterpreter
             | NumberStyles.AllowTrailingWhite;
 
         /// <summary>
-        /// 
+        /// Compiles a string into a single variable executable function.
         /// </summary>
-        /// <param name="function"></param>
-        /// <param name="angleType"></param>
-        /// <param name="cultureInfo"></param>
-        /// <returns></returns>
+        /// <param name="function">A single variable function where 'x' is the variable.</param>
+        /// <param name="angleType">The angle type used by trigonometric functions.</param>
+        /// <param name="cultureInfo">
+        /// Provide culture-specific formatting information. Default value is CultureInfo.CurrentCulture.
+        /// </param>
+        /// <returns>The executable function, or null if compilation failed.</returns>
+        /// <example>
+        /// <code>
+        /// Func<double, double> sin = Compiler.CompileFunction("sin(x)");
+        /// </code>
+        /// </example>
         public static Func<double, double> CompileFunction(
             string function,
             AngleType angleType = AngleType.Radian,
@@ -44,6 +47,21 @@ namespace FunctionInterpreter
             return null;
         }
 
+        /// <summary>
+        /// Compiles a string into a single variable executable function.
+        /// </summary>
+        /// <param name="function">A single variable function where 'x' is the variable.</param>
+        /// <param name="angleType">The angle type used by trigonometric functions.</param>
+        /// <param name="cultureInfo">
+        /// Provide culture-specific formatting information. Default value is CultureInfo.CurrentCulture.
+        /// </param>
+        /// <returns>The compilation results.</returns>
+        /// <example>
+        /// <code>
+        /// CompileResult result = Compiler.CompileFunction("sin(x)");
+        /// Func<double, double> sin = result.Functions[0];
+        /// </code>
+        /// </example>
         public static CompileResult Compile(
             string function,
             AngleType angleType = AngleType.Radian,
@@ -57,13 +75,15 @@ namespace FunctionInterpreter
         /// </summary>
         /// <param name="functions">
         /// An enumerable containing single variable functions.
-        /// Functions may reference other functions provided they have been defined using the form "f(x) = ..."</param>
+        /// Functions may reference other functions provided they have been defined using the form "f(x) = ..."
+        /// </param>
         /// <param name="angleType">The angle type used by trigonometric functions.</param>
         /// <param name="cultureInfo">
         /// Provide culture-specific formatting information. Default value is CultureInfo.CurrentCulture.
         /// </param>
         /// <returns>The result of the compilation.</returns>
         /// <example>
+        /// <code>
         /// CompileResult result = Compile.Compile(new string[]
         /// {
         ///    "f(x) = x",
@@ -71,6 +91,7 @@ namespace FunctionInterpreter
         /// });
         /// Func<double, double> f = result.Functions[0];
         /// Func<double, double> g = result.Functions[1];
+        /// </code>
         /// </example>
         public static CompileResult Compile(
             IEnumerable<string> functions,
@@ -142,11 +163,6 @@ namespace FunctionInterpreter
             }
 
             return context.ToResult();
-        }
-
-        internal static bool IsGeneratedFunctionName(string functionName)
-        {
-            return functionName.StartsWith("_", StringComparison.CurrentCultureIgnoreCase);
         }
 
         private static Func<double, double> Compile(SyntaxNode node, CompilationContext context)
@@ -272,7 +288,6 @@ namespace FunctionInterpreter
 
             context.AddError(ErrorType.ExcessArguments);
             return null;
-
         }
 
         private static Func<double, double> CompileIdentifier(TerminalSyntaxNode node, CompilationContext context)

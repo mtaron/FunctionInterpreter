@@ -9,6 +9,7 @@ namespace FunctionInterpreter
 {
     internal class CompilationContext
     {
+        private const string FunctionPrefix = "_";
         private readonly List<CompileError> _errors = new List<CompileError>();
 
         public CompilationContext(CultureInfo cultureInfo, AngleType angleType)
@@ -40,6 +41,11 @@ namespace FunctionInterpreter
             return CompileResult.Create(this);
         }
 
+        public static bool IsGeneratedFunctionName(string functionName)
+        {
+            return functionName.StartsWith(FunctionPrefix, StringComparison.CurrentCultureIgnoreCase);
+        }
+
         public IReadOnlyDictionary<string, string> CreateFunctionMap(IEnumerable<string> functions)
         {
             var functionMap = new Dictionary<string, string>();
@@ -57,7 +63,7 @@ namespace FunctionInterpreter
                 int equalsIndex = function.IndexOf('=');
                 if (equalsIndex < 0)
                 {
-                    string functionName = "_" + functionIndex.ToString(CultureInfo.InvariantCulture);
+                    string functionName = FunctionPrefix + functionIndex.ToString(CultureInfo.InvariantCulture);
                     functionMap.Add(functionName, function);
                     Symbols.AddCustomFunction(functionName, functionIndex);
                 }
