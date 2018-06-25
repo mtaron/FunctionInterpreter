@@ -2,7 +2,7 @@
 {
     internal class TerminalSyntaxNode : SyntaxNode
     {
-        public TerminalSyntaxNode(NodeType nodeType, Token token)
+        public TerminalSyntaxNode(NodeType nodeType, in Token token)
             : base(nodeType)
         {
             Token = token;
@@ -12,7 +12,7 @@
 
         public override string ToString()
         {
-            if (!string.IsNullOrEmpty(Token?.Text))
+            if (!string.IsNullOrEmpty(Token.Text))
             {
                 return Token.Text;
             }

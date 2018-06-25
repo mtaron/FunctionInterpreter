@@ -2,7 +2,7 @@
 {
     public enum ErrorType
     {
-        Unknown,
+        InvalidCharacter,
         InvalidNumber,
         ExpressionExpected,
         VariableExpected,
@@ -16,5 +16,6 @@
         ArgumentExpected,
         ExcessArguments,
         UnexpectedToken,
+        MissingToken,
     }
 }

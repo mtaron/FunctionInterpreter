@@ -28,23 +28,19 @@ namespace FunctionInterpreter
 
         public IReadOnlyList<CompileError> Errors
         {
-            get { return _errors; }
+            get => _errors;
         }
 
         public bool HasErrors
         {
-            get { return _errors.Count > 0; }
+            get => _errors.Count > 0;
         }
 
         public CompileResult ToResult()
-        {
-            return CompileResult.Create(this);
-        }
+            => CompileResult.Create(this);
 
         public static bool IsGeneratedFunctionName(string functionName)
-        {
-            return functionName.StartsWith(FunctionPrefix, StringComparison.CurrentCultureIgnoreCase);
-        }
+            => functionName.StartsWith(FunctionPrefix, StringComparison.CurrentCultureIgnoreCase);
 
         public IReadOnlyDictionary<string, string> CreateFunctionMap(IEnumerable<string> functions)
         {
@@ -86,40 +82,26 @@ namespace FunctionInterpreter
         }
 
         public void SetFunctionReference(string reference)
-        {
-            Symbols.SetFunctionReference(CurrentFunctionName, reference);
-        }
+            => Symbols.SetFunctionReference(CurrentFunctionName, reference);
 
         public Func<double, double> ResolveMonadicFunction(string name)
-        {
-            return Symbols.ResolveMonadicFunction(name, AngleType)
-                ?? Symbols.ResolveCustomFunction(name);
-        }
+            => Symbols.ResolveMonadicFunction(name, AngleType) ?? Symbols.ResolveCustomFunction(name);
 
         public void AddError(ErrorType error, TerminalSyntaxNode node)
-        {
-            int? position = node.Token?.Start;
-            _errors.Add(new CompileError(error, position));
-        }
+            => _errors.Add(new CompileError(error, node.Token.Start));
 
         public void AddErrorWithParameter(ErrorType error, TerminalSyntaxNode node)
         {
-            int? position = node.Token?.Start;
-            string errorMessage = ErrorResources.GetString(error);
-            errorMessage = string.Format(CultureInfo.CurrentUICulture, errorMessage, node.ToString());
-            var compileError = new CompileError(error, errorMessage, position);
-            AddError(new CompileError(error, position));
+            string errorMessage = ErrorResources.GetString(error, node.ToString());
+            var compileError = new CompileError(error, errorMessage, node.Token.Start);
+            AddError(compileError);
         }
 
-        public void AddError(ErrorType error, int? position = null)
-        {
-            _errors.Add(new CompileError(error, position));
-        }
+        public void AddError(ErrorType error)
+            => _errors.Add(new CompileError(error));
 
-        public void AddError(CompileError error)
-        {
-            _errors.Add(error);
-        }
+        public void AddError(in CompileError error)
+            => _errors.Add(error);
 
         private string ValidateFunctionName(string functionName)
         {

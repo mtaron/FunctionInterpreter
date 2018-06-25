@@ -66,9 +66,7 @@ namespace FunctionInterpreter
             string function,
             AngleType angleType = AngleType.Radian,
             CultureInfo cultureInfo = null)
-        {
-            return Compile(new string[] { function }, angleType, cultureInfo);
-        }
+            => Compile(new string[] { function }, angleType, cultureInfo);
 
         /// <summary>
         /// Compiles strings describing single variable funtions into executable functions.

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FunctionInterpreter.Properties;
 
 namespace FunctionInterpreter.Parse
 {
@@ -31,7 +30,7 @@ namespace FunctionInterpreter.Parse
 
         private bool IsEOF
         {
-            get { return _current >= _length; }
+            get => _current >= _length;
         }
 
         private Token Current
@@ -40,7 +39,7 @@ namespace FunctionInterpreter.Parse
             {
                 if (IsEOF)
                 {
-                    return null;
+                    return Token.EOF;
                 }
 
                 return _tokens[_current];
@@ -53,7 +52,7 @@ namespace FunctionInterpreter.Parse
             {
                 if (IsEOF)
                 {
-                    return TokenType.Unknown;
+                    return TokenType.EOF;
                 }
 
                 return Current.Type;
@@ -151,7 +150,7 @@ namespace FunctionInterpreter.Parse
             return leftOperand;
         }
 
-        private void ReportError(string error)
+        private void ReportError(ErrorType error, string parameter)
         {
             int position = _length - 1;
             if (!IsEOF)
@@ -159,7 +158,8 @@ namespace FunctionInterpreter.Parse
                 position = Current.Start;
             }
 
-            _context.AddError(new CompileError(ErrorType.Unknown, error, position));
+            string errorMessage = ErrorResources.GetString(error, parameter);
+            _context.AddError(new CompileError(error, errorMessage, position));
         }
 
         private void ReportError(ErrorType error)
@@ -174,9 +174,7 @@ namespace FunctionInterpreter.Parse
         }
 
         private void AdvanceToken()
-        {
-            _current++;
-        }
+            => _current++;
 
         private static bool IsOperatorToken(TokenType tokenType)
         {
@@ -251,9 +249,9 @@ namespace FunctionInterpreter.Parse
 
         private void AdvanceToken(TokenType tokenType)
         {
-            if (_current == _length || Current.Type != tokenType)
+            if (IsEOF || Current.Type != tokenType)
             {
-                ReportError("Expected " + tokenType.ToString());
+                ReportError(ErrorType.MissingToken, tokenType.ToString());
                 return;
             }
 
@@ -283,14 +281,10 @@ namespace FunctionInterpreter.Parse
         }
 
         private SyntaxNode ParseNegation(SyntaxNode unaryOperand)
-        {
-            return new NonterminalSyntaxNode(NodeType.Negation, unaryOperand);
-        }
+            => new NonterminalSyntaxNode(NodeType.Negation, unaryOperand);
 
         public static bool IsRightAssociative(NodeType operation)
-        {
-            return operation == NodeType.Power;
-        }
+            => operation == NodeType.Power;
 
         public static NodeType GetExpressionType(TokenType tokenType)
         {

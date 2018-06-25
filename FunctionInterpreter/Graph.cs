@@ -8,9 +8,7 @@ namespace FunctionInterpreter
         private readonly Dictionary<T, List<T>> _adjacencyList = new Dictionary<T, List<T>>();
 
         public bool Contains(T node)
-        {
-            return _adjacencyList.ContainsKey(node);
-        }
+            => _adjacencyList.ContainsKey(node);
 
         public void AddNode(T node)
         {

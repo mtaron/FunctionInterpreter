@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.2</TargetFramework>
     <Description>A lightweight string to function parser.</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AssemblyVersion>0.1.4.0</AssemblyVersion>
-    <FileVersion>0.1.4.0</FileVersion>
-    <Version>0.1.4</Version>
-    <Copyright>Michael Taron © 2017</Copyright>
+    <AssemblyVersion>0.1.5.0</AssemblyVersion>
+    <FileVersion>0.1.5.0</FileVersion>
+    <Version>0.1.5</Version>
+    <Copyright>Michael Taron © 2018</Copyright>
     <Authors>Michael Taron</Authors>
     <Company />
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -16,8 +15,8 @@
     <RepositoryUrl>https://github.com/mtaron/FunctionInterpreter</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>math, parser, functions, compiler</PackageTags>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -25,12 +24,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>

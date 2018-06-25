@@ -2,7 +2,7 @@
 {
     internal enum TokenType
     {
-        Unknown,
+        EOF,
         NumericLiteral,
         Identifier,
         Plus,

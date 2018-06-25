@@ -6,7 +6,7 @@ namespace FunctionInterpreter
     /// Describes the type and location of a compilation error.
     /// </summary>
     [DebuggerDisplay("{Text}")]
-    public class CompileError
+    public readonly struct CompileError
     {
         public CompileError(ErrorType error, int? position = null)
         {
@@ -19,6 +19,7 @@ namespace FunctionInterpreter
         {
             Type = error;
             Text = text;
+            Position = null;
         }
 
         public CompileError(ErrorType error, string text, int? position)

@@ -6,9 +6,7 @@ namespace FunctionInterpreter
     internal static class ErrorResources
     {
         public static string GetString(ErrorType error)
-        {
-            return Resources.ResourceManager.GetString(error.ToString(), CultureInfo.CurrentUICulture);
-        }
+            => Resources.ResourceManager.GetString(error.ToString(), CultureInfo.CurrentUICulture);
 
         public static string GetString(ErrorType error, string parameter)
         {

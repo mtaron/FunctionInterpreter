@@ -7,12 +7,13 @@ namespace FunctionInterpreter
     /// <summary>
     /// Contains the result of a successful or failed compilation.
     /// </summary>
-    public class CompileResult
+    public readonly struct CompileResult
     {
         private readonly SymbolTable _symbols;
 
         private CompileResult(IReadOnlyList<CompileError> errors)
         {
+            _symbols = null;
             Errors = errors;
         }
 
@@ -36,7 +37,7 @@ namespace FunctionInterpreter
 
         public bool IsSuccess
         {
-            get { return !Errors.Any(); }
+            get => !Errors.Any();
         }
 
         public IReadOnlyList<Func<double, double>> Functions

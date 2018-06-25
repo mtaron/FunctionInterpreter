@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using FunctionInterpreter.Properties;
 
 namespace FunctionInterpreter.Parse
 {
@@ -116,18 +113,13 @@ namespace FunctionInterpreter.Parse
                             }
                             else
                             {
-                                ReportError(Resources.InvalidCharacter);
+                                ReportError(ErrorType.InvalidCharacter);
                                 return;
                             }
                             break;
                     }
                 }
             }
-        }
-
-        private void ReportError(string error)
-        {
-            _context.AddError(new CompileError(ErrorType.Unknown, error, _current));
         }
 
         private void ReportError(ErrorType error)
@@ -278,7 +270,7 @@ namespace FunctionInterpreter.Parse
             _current++;
         }
 
-        private void AddToken(Token token)
+        private void AddToken(in Token token)
         {
             _tokens.Add(token);
         }

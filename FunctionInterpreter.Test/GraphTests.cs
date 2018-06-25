@@ -130,7 +130,7 @@ namespace FunctionInterpreter.Test
             var graph = new Graph<string>();
             Action action = () => graph.GetClosure(null).First();
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [TestMethod]
